@@ -1,0 +1,23 @@
+{
+  "name": "react-watermark",
+  "version": "0.0.1",
+  "description": "a watermark for react",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justQing00/react-watermark.git"
+  },
+  "keywords": [
+    "watermark",
+    "react"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/justQing00/react-watermark/issues"
+  },
+  "homepage": "https://github.com/justQing00/react-watermark#readme"
+}

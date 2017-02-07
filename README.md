@@ -1,10 +1,10 @@
 # react-watermark
 A watermark for react
 
-### Reason
+### 1、Reason
 This Project refactor from a general javascript file about watermark. And I convert it to a React Project.
 
-How to Use:
+### 2、How to Use:
 
 
 ```
@@ -15,7 +15,7 @@ How to Use:
 ```
 
 
-defaultOptions:
+### 3、defaultOptions:
 
 ```
     options = {
@@ -36,7 +36,13 @@ defaultOptions:
     };
 ```
 
-next want to do:
+![react-watermark](./capture.png)
 
-- change option name.
+### 4、next want to do:
+
+- change option name in a right way.
+- refactor function handleColOrRowWhenZero.
 - use svg not a div element.
+
+### 5、origin source:
+[watermark](http://www.cnblogs.com/GongQi/p/4074609.html?utm_source=tuicool&utm_medium=referral)
