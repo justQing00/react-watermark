@@ -40,7 +40,7 @@ This Project refactor from a general javascript file about watermark. And I conv
 
 ### 4、next want to do:
 
-- refactor function handleColOrRowWhenZero.
+- refactor function handleColOrRowWhenZero. [finish]
 - render mark in a target element.
 - change option name in a right way.
 - use svg not a div element.
