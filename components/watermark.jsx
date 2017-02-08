@@ -19,21 +19,38 @@ const defaultOpts={
   wm_angle: 25 // 水印倾斜度数
 };
 
+// 获得列或者行的数量
+const getNumbers = ({ outerLength, ownLength, ownPos, ownSpace}) => {
+  return parseInt((outerLength - ownLength + ownSpace) / (ownLength + ownSpace));
+}
+
 const handleColOrRowWhenZero = (options) => {
-  const pageWidth = Math.max(document.body.scrollWidth,document.body.clientWidth);
-  const pageHeight = Math.max(document.body.scrollHeight,document.body.clientHeight);
+  const pageWidth = Math.max(document.body.scrollWidth, document.body.clientWidth);
+  const pageHeight = Math.max(document.body.scrollHeight, document.body.clientHeight);
   const option = {};
   const { wm_cols, wm_x, wm_width, wm_x_space, wm_rows, wm_y, wm_height, wm_y_space } = options;
 
-  //如果将水印列数设置为0，或水印列数设置过大，超过页面最大宽度，则重新计算水印列数和水印x轴间隔
+  // 如果将水印列数设置为0，或水印列数设置过大，超过页面最大宽度，则重新计算水印列数和水印x轴间隔
   if (wm_cols == 0 || (parseInt(wm_x + wm_width * wm_cols + wm_x_space * (wm_cols - 1)) > pageWidth)) {
-    const temp = parseInt((pageWidth-wm_x+wm_x_space) / (wm_width + wm_x_space));
+    const numbersParams = {
+      outerLength: pageWidth,
+      ownLength: wm_width,
+      ownPos: wm_x,
+      ownSpace: wm_x_space,
+    }
+    const temp = getNumbers(numbersParams);
     option.wm_cols = temp;
     option.wm_x_space = parseInt((pageWidth - wm_x - wm_width * temp) / (temp - 1));
   }
-  //如果将水印行数设置为0，或水印行数设置过大，超过页面最大长度，则重新计算水印行数和水印y轴间隔
+  // 如果将水印行数设置为0，或水印行数设置过大，超过页面最大长度，则重新计算水印行数和水印y轴间隔
   if (wm_rows == 0 || (parseInt(wm_y + wm_height * wm_rows + wm_y_space * (wm_rows - 1)) > pageHeight)) {
-    const temp = parseInt((wm_y_space + pageHeight - wm_y) / (wm_height + wm_y_space));
+    const numbersParams = {
+      outerLength: pageHeight,
+      ownLength: wm_height,
+      ownPos: wm_y,
+      ownSpace: wm_y_space,
+    }
+    const temp = getNumbers(numbersParams);
     option.wm_rows = temp;
     option.wm_y_space = parseInt(((pageHeight - wm_y) - wm_height * temp) / (temp - 1));
   }
