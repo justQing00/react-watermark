@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import './watermark.scss';
+import './watermark.css';
 
 const defaultOpts={
   wm_txt: 'text',
