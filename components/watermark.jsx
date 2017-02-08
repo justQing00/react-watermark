@@ -29,37 +29,41 @@ const getSpace = ({ outerLength, ownLength, ownPos, numbers }) => {
   return parseInt((outerLength - ownPos - ownLength * numbers) / (numbers - 1));
 };
 
+// 判断是否需要处理行列
+const isNeedHandle = ({ outerLength, ownLength, ownPos, ownSpace, numbers }) => {
+  return wm_cols === 0 || (parseInt(ownPos + ownLength * numbers + ownSpace * (numbers - 1)) > outerLength);
+}
+
 const handleColOrRowWhenZero = (options) => {
   const pageWidth = Math.max(document.body.scrollWidth, document.body.clientWidth);
   const pageHeight = Math.max(document.body.scrollHeight, document.body.clientHeight);
   const option = {};
   const { wm_cols, wm_x, wm_width, wm_x_space, wm_rows, wm_y, wm_height, wm_y_space } = options;
-
+  const xParams = {
+    outerLength: pageWidth,
+    ownLength: wm_width,
+    ownPos: wm_x,
+    ownSpace: wm_x_space,
+  }
+  const yParams = {
+    outerLength: pageHeight,
+    ownLength: wm_height,
+    ownPos: wm_y,
+    ownSpace: wm_y_space,
+  }
   // 如果将水印列数设置为0，或水印列数设置过大，超过页面最大宽度，则重新计算水印列数和水印x轴间隔
   if (wm_cols == 0 || (parseInt(wm_x + wm_width * wm_cols + wm_x_space * (wm_cols - 1)) > pageWidth)) {
-    const numbersParams = {
-      outerLength: pageWidth,
-      ownLength: wm_width,
-      ownPos: wm_x,
-      ownSpace: wm_x_space,
-    }
-    const temp = getNumbers(numbersParams);
+    const temp = getNumbers(xParams);
     option.wm_cols = temp;
-    numbersParams.numbers = temp;
-    option.wm_x_space = getSpace(numbersParams);
+    xParams.numbers = temp;
+    option.wm_x_space = getSpace(xParams);
   }
   // 如果将水印行数设置为0，或水印行数设置过大，超过页面最大长度，则重新计算水印行数和水印y轴间隔
   if (wm_rows == 0 || (parseInt(wm_y + wm_height * wm_rows + wm_y_space * (wm_rows - 1)) > pageHeight)) {
-    const numbersParams = {
-      outerLength: pageHeight,
-      ownLength: wm_height,
-      ownPos: wm_y,
-      ownSpace: wm_y_space,
-    }
-    const temp = getNumbers(numbersParams);
+    const temp = getNumbers(yParams);
     option.wm_rows = temp;
-    numbersParams.numbers = temp;
-    option.wm_y_space = getSpace(numbersParams);
+    yParams.numbers = temp;
+    option.wm_y_space = getSpace(yParams);
   }
   return Object.assign({}, options, option);
 };
