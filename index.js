@@ -1,3 +1,3 @@
 import Watermark from './components/watermark';
 
-export default Watermark;
+module.exports = Watermark;
