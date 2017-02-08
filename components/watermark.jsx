@@ -32,12 +32,23 @@ const getSpace = ({ outerLength, ownLength, ownPos, numbers }) => {
 // 判断是否需要处理行列
 const isNeedHandle = ({ outerLength, ownLength, ownPos, ownSpace, numbers }) => {
   return numbers === 0 || (parseInt(ownPos + ownLength * numbers + ownSpace * (numbers - 1)) > outerLength);
-}
+};
+
+// 获得新的Option
+const getNewOption = (params, numberName, spaceName) => {
+  const option = {};
+  if (isNeedHandle(params)) {
+    const temp = getNumbers(params);
+    option[numberName] = temp;
+    params.numbers = temp;
+    option[spaceName] = getSpace(params);
+  }
+  return option;
+};
 
 const handleColOrRowWhenZero = (options) => {
   const pageWidth = Math.max(document.body.scrollWidth, document.body.clientWidth);
   const pageHeight = Math.max(document.body.scrollHeight, document.body.clientHeight);
-  const option = {};
   const { wm_cols, wm_x, wm_width, wm_x_space, wm_rows, wm_y, wm_height, wm_y_space } = options;
   const xParams = {
     outerLength: pageWidth,
@@ -53,20 +64,9 @@ const handleColOrRowWhenZero = (options) => {
     ownSpace: wm_y_space,
     numbers: wm_rows,
   }
-  // 如果将水印列数设置为0，或水印列数设置过大，超过页面最大宽度，则重新计算水印列数和水印x轴间隔
-  if (isNeedHandle(xParams)) {
-    const temp = getNumbers(xParams);
-    option.wm_cols = temp;
-    xParams.numbers = temp;
-    option.wm_x_space = getSpace(xParams);
-  }
-  // 如果将水印行数设置为0，或水印行数设置过大，超过页面最大长度，则重新计算水印行数和水印y轴间隔
-  if (isNeedHandle(yParams)) {
-    const temp = getNumbers(yParams);
-    option.wm_rows = temp;
-    yParams.numbers = temp;
-    option.wm_y_space = getSpace(yParams);
-  }
+  const xOption = getNewOption(xParams, 'wm_cols', 'wm_x_space');
+  const yOption = getNewOption(yParams, 'wm_rows', 'wm_y_space');
+  const option = Object.assign({}, xOption, yOption);
   return Object.assign({}, options, option);
 };
 
